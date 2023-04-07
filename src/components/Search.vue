@@ -1,14 +1,14 @@
 <template>
 	<header class="search">
 		<div class="container">
-			<form class="search__form" @submit.prevent="getResult(query)">
-				<input class="search__input" type="text" v-model="query" placeholder="Search for ... (e.g. 'Sun')">
+			<form class="search__form" @submit.prevent="nasaStore.getResult(nasaStore.query)">
+				<input class="search__input" type="text" v-model="nasaStore.query" placeholder="Search for ... (e.g. 'Sun')">
 			</form>
 		</div>
 	</header>
 
 	<div class="result container">
-		<div v-for="(item, index) in results" :key="index">
+		<div v-for="(item, index) in nasaStore.results" :key="index">
 			<img :src="item.links[0].href" alt="" width="400" height="400">
 		</div>
 	</div>
@@ -16,29 +16,14 @@
 </template>
 
 <script setup>
-	import axios from 'axios'
-	import { ref } from 'vue'
+	import { useNasaStore } from '../stores/nasaStore'
 
-	// const KEY = 'JYCDJoL2uDndgQrfxn9AE9zLNmjodGUfnAVM7kxd'
-	// const URL = `https://api.nasa.gov/mars-photos/api/v1/rovers/curiosity/photos?sol=1000&api_key=${KEY}`
-	const URL = 'https://images-api.nasa.gov'
+	// STORE
+	const nasaStore = useNasaStore()
 
-	const query = ref('')
-	const results = ref([])
-
-	const getResult = (queryParam) => {
-		console.log(queryParam)
-		// axios.get(`${URL}`).then(response => { console.log(response) })
-		axios.get(`${URL}/search?q=${queryParam}&media_type=image`).then(response => {
-			console.log(response.data.collection.items)
-			results.value = response.data.collection.items;
-			console.log(results.value)
-		})
-		query.value = ''
-	}
 </script>
 
-<style lang="scss">
+<style lang="scss" scoped>
 .search {
 	padding: 150px 0 100px;
 	background: url('../assets/images/star_planet.png') no-repeat 50%/cover;
@@ -66,6 +51,7 @@
 	grid-template-columns: repeat(3, 1fr);
 	grid-template-rows: auto;
 	gap: 5px;
+	color: #fff;
 
 	div {
 		max-height: 500px;
