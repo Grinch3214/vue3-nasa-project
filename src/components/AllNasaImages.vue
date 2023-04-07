@@ -1,5 +1,4 @@
 <template>
-	<div>ALL RESULTS</div>
 	<div class="result container">
 		<div v-for="(item, index) in nasaStore.results" :key="index">
 			<img :src="item.links[0].href" alt="" width="400" height="400" @click="pushItem(item)">
@@ -41,6 +40,7 @@
 	grid-template-rows: auto;
 	gap: 5px;
 	color: #fff;
+	padding: 50px 0;
 
 	div {
 		max-height: 500px;

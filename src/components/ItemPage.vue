@@ -11,8 +11,13 @@
 				</div>
 				<div class="nasa__box">
 					<h1 class="nasa__box-title">{{ nasaStore.itemID[0].data[0].title }}</h1>
-
+					<div class="nasa__id">
+						Nasa id: <span>{{ nasaStore.itemID[0].data[0].nasa_id }}</span>
+					</div>
 					<p class="nasa__box-description link-nasa" v-html="nasaStore.itemID[0].data[0].description"></p>
+					<p class="nasa__created">
+						Date Created: <span>{{ fixDateString(nasaStore.itemID[0].data[0].date_created) }}</span>
+					</p>
 				</div>
 			</div>
 		</div>
@@ -35,6 +40,14 @@
 	const isItemExist = computed(() => {
 		return nasaStore.itemID && nasaStore.itemID.length
 	})
+
+	const fixDateString = (date) => {
+		let originalDate = date;
+		let dateString = originalDate.substring(0, 10);
+		let newDate = new Date(dateString);
+		let newDateString = newDate.toLocaleDateString("en-US", { day: "2-digit", month: "2-digit", year: "numeric" }).split('/').join('.');
+		return newDateString;
+	}
 
 	onMounted(async() => {
 		await nasaStore.getIdItem(route.params.id)
@@ -98,12 +111,43 @@
 	}
 
 	&__box-title {
-		font-size: 40px;
+		font-size: 30px;
+		line-height: 30px;
 		text-transform: uppercase;
-		margin-bottom: 20px;
+		margin-bottom: 10px;
+		font-weight: 800;
 	}
 
 	&__box-description {
+		font-size: 20px;
+		margin-bottom: 20px;
+		opacity: .8;
+	}
+
+	&__id,
+	&__created {
+		font-size: 15px;
+		line-height: 15px;
+		font-weight: 700;
+		text-transform: uppercase;
+		span {
+			opacity: .8;
+		}
+	}
+
+	&__id {
+		display: flex;
+		gap: 6px;
+		margin-bottom: 20px;
+		span {
+			background: #505050;
+			padding: 0 8px;
+			border-radius: 5px;
+			font-size: 12px;
+		}
+	}
+
+	&__created {
 	}
 }
 </style>
