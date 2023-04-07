@@ -26,9 +26,9 @@
 			params: {
 				id: query.data[0].nasa_id
 			},
-			query: {
-				...route.query
-			}
+			// query: {
+			// 	...route.query
+			// }
 		})
 	}
 

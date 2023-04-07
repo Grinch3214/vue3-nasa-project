@@ -1,4 +1,4 @@
-import { ref, computed } from 'vue'
+import { ref } from 'vue'
 import axios from 'axios'
 import { defineStore } from 'pinia'
 
@@ -10,19 +10,21 @@ export const useNasaStore = defineStore('nasaStore', () => {
 
 	const results = ref([])
 	const query = ref('')
+	const itemID = ref([])
 
 	const getResult = async(queryParam) => {
 		await axios.get(`${URL}/search?q=${queryParam}&media_type=image`).then(response => {
 			console.log(response.data.collection.items)
-			results.value = response.data.collection.items;
-			console.log(results.value)
+			results.value = response.data.collection.items
 			query.value = ''
 		})
 	}
 
 	const getIdItem = async(id) => {
+		console.log(id)
 		await axios.get(`${URL}/search?q=${id}`).then(response => {
-			console.log(response.data.collection.items)
+			itemID.value = response.data.collection.items
+			console.log('Store ID', itemID.value)
 		})
 	}
 
@@ -30,6 +32,7 @@ export const useNasaStore = defineStore('nasaStore', () => {
 		getResult,
 		results,
 		query,
-		getIdItem
+		getIdItem,
+		itemID
 	}
 })
