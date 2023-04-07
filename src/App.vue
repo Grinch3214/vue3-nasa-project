@@ -4,4 +4,8 @@ import Search from './components/Search.vue';
 
 <template>
 	<Search />
+	<main>
+		<RouterView />
+	</main>
+	
 </template>

@@ -20,9 +20,16 @@ export const useNasaStore = defineStore('nasaStore', () => {
 		})
 	}
 
+	const getIdItem = async(id) => {
+		await axios.get(`${URL}/search?q=${id}`).then(response => {
+			console.log(response.data.collection.items)
+		})
+	}
+
 	return {
 		getResult,
 		results,
-		query
+		query,
+		getIdItem
 	}
 })

@@ -7,12 +7,6 @@
 		</div>
 	</header>
 
-	<div class="result container">
-		<div v-for="(item, index) in nasaStore.results" :key="index">
-			<img :src="item.links[0].href" alt="" width="400" height="400">
-		</div>
-	</div>
-
 </template>
 
 <script setup>
@@ -43,25 +37,6 @@
 			color: #fff;
 			opacity: .7;
 		}
-	}
-}
-
-.result {
-	display: grid;
-	grid-template-columns: repeat(3, 1fr);
-	grid-template-rows: auto;
-	gap: 5px;
-	color: #fff;
-
-	div {
-		max-height: 500px;
-		border: 2px solid #505050;
-	}
-
-	img {
-		width: 100%;
-		height: 100%;
-		object-fit: cover;
 	}
 }
 </style>
