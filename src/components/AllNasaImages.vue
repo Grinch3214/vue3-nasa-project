@@ -2,20 +2,36 @@
 	<div class="bad-result" v-if="!nasaStore.results.length">
 		Based on your selections, no results were found.
 	</div>
-	<div class="result container" v-else>
+	<div ref="resultElem" class="result container" v-else>
 		<div v-for="(item, index) in nasaStore.results" :key="index">
-			<img :src="item.links[0].href" alt="" width="400" height="400" @click="pushItem(item)">
+			<img loading="lazy" :src="item.links[0].href" alt="" width="400" height="400" @click="pushItem(item)">
 		</div>
+	</div>
+	<div class="pagination" v-if="nasaStore.results.length">
+		<button :disabled="nasaStore.page === 1" class="pagination__prev" @click="nasaStore.page -= 1, nasaStore.changePage()">Prev</button>
+		<button :disabled="nasaStore.page === nasaStore.totalPages" class="pagination__next" @click="nasaStore.page += 1, nasaStore.changePage(), scrollToTop()">Next</button>
 	</div>
 </template>
 
 <script setup>
 	import { useNasaStore } from '../stores/nasaStore'
 	import { useRouter, useRoute } from 'vue-router'
-	import { onMounted } from 'vue'
+	import { onMounted, ref } from 'vue'
 
 	// STORE
 	const nasaStore = useNasaStore()
+
+	// vars
+	const resultElem = ref(null)
+
+	const scrollToTop = () => {
+      const element = resultElem.value;
+      element.scrollIntoView({
+        behavior: 'smooth',
+        block: 'start',
+        inline: 'nearest'
+      });
+    };
 
 	// router
 	const router = useRouter()
@@ -55,7 +71,8 @@
 	grid-template-rows: auto;
 	gap: 10px;
 	color: #fff;
-	margin-top: 50px;
+	padding-top: 50px;
+	padding-bottom: 50px;
 	@media screen and (max-width: 992px) {
 		grid-template-columns: repeat(2, 1fr);
 	}
@@ -75,6 +92,27 @@
 		width: 100%;
 		height: 100%;
 		object-fit: contain;
+	}
+}
+
+.pagination {
+	padding: 20px 0;
+	display: flex;
+	gap: 20px;
+	justify-content: center;
+	button {
+		padding: 6px 14px;
+		background: #000;
+		color: #fff;
+		box-shadow: 0 0 0 1px #fff;
+		border-radius: 4px;
+		cursor: pointer;
+
+		&:disabled {
+			background: #505050;
+			cursor: default;
+			opacity: .5;
+		}
 	}
 }
 </style>
