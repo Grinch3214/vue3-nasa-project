@@ -18,6 +18,13 @@
 					<p class="nasa__created">
 						Date Created: <span>{{ fixDateString(nasaStore.itemID[0].data[0].date_created) }}</span>
 					</p>
+					<div class="nasa__keywords">
+						Keywords: 
+						<ul>
+							<li v-for="(item, index) of nasaStore.itemID[0].data[0].keywords"
+							:key="index"> {{ item }}</li>
+						</ul>
+					</div>
 				</div>
 			</div>
 		</div>
@@ -51,7 +58,6 @@
 
 	onMounted(async() => {
 		await nasaStore.getIdItem(route.params.id)
-		console.log('Component', nasaStore.itemID[0])
 	})
 </script>
 
@@ -125,11 +131,13 @@
 	}
 
 	&__id,
-	&__created {
+	&__created,
+	&__keywords {
 		font-size: 15px;
 		line-height: 15px;
 		font-weight: 700;
 		text-transform: uppercase;
+		margin-bottom: 20px;
 		span {
 			opacity: .8;
 		}
@@ -138,7 +146,6 @@
 	&__id {
 		display: flex;
 		gap: 6px;
-		margin-bottom: 20px;
 		span {
 			background: #505050;
 			padding: 0 8px;
@@ -147,7 +154,13 @@
 		}
 	}
 
-	&__created {
+	&__keywords {
+		display: flex;
+		gap: 20px;
+		ul > li {
+			margin-bottom: 5px;
+			opacity: .8;
+		}
 	}
 }
 </style>
