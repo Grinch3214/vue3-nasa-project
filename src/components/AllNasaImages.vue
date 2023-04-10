@@ -9,6 +9,7 @@
 <script setup>
 	import { useNasaStore } from '../stores/nasaStore'
 	import { useRouter, useRoute } from 'vue-router'
+	import { onMounted } from 'vue'
 
 	// STORE
 	const nasaStore = useNasaStore()
@@ -30,6 +31,10 @@
 			// }
 		})
 	}
+
+	onMounted(async() => {
+		await nasaStore.getStartResultsonPage()
+	})
 
 </script>
 

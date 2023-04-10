@@ -21,11 +21,20 @@ export const useNasaStore = defineStore('nasaStore', () => {
 	}
 
 	const getIdItem = async(id) => {
-		console.log(id)
 		await axios.get(`${URL}/search?q=${id}`).then(response => {
 			itemID.value = response.data.collection.items
 			console.log('Store ID', itemID.value)
 		})
+	}
+
+	const getStartResultsonPage = async() => {
+		if(!results.value.length) {
+			await axios.get(`${URL}/search?q=earth&media_type=image`).then(response => {
+				results.value = response.data.collection.items
+				console.log(results.value)
+			})
+		}
+		
 	}
 
 	return {
@@ -33,6 +42,7 @@ export const useNasaStore = defineStore('nasaStore', () => {
 		results,
 		query,
 		getIdItem,
-		itemID
+		itemID,
+		getStartResultsonPage
 	}
 })
