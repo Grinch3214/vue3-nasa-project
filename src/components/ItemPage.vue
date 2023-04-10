@@ -104,16 +104,16 @@
 
 	&__image {
 		height: 500px;
-		flex: 0 0 600px;
+		flex: 1 1 600px;
 		img {
 			width: 100%;
 			height: 100%;
-			object-fit: cover;
+			object-fit: contain;
 		}
 	}
 
 	&__box {
-		flex: 1 1 auto;
+		flex: 1 1 50%;
 	}
 
 	&__box-title {
