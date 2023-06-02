@@ -67,22 +67,22 @@
 }
 .result {
 	display: grid;
-	grid-template-columns: repeat(3, 1fr);
+	grid-template-columns: repeat(5, 1fr);
 	grid-template-rows: auto;
 	gap: 10px;
 	color: #fff;
 	padding-top: 50px;
 	padding-bottom: 50px;
 	@media screen and (max-width: 992px) {
-		grid-template-columns: repeat(2, 1fr);
+		grid-template-columns: repeat(4, 1fr);
 	}
 	@media screen and (max-width: 600px) {
-		grid-template-columns: repeat(1, 1fr);
+		grid-template-columns: repeat(2, 1fr);
 	}
 	// padding: 50px 0;
 
 	div {
-		max-height: 500px;
+		max-height: 200px;
 		border: 2px solid #505050;
 		cursor: pointer;
 		background: rgba(0, 0, 0, 0.6);
