@@ -16,43 +16,62 @@ export const useNasaStore = defineStore('nasaStore', () => {
 	const totalPages = ref(0)
 	const saveQueryParam = ref('')
 
-	const changePage = async() => {
-		loader.value = true
-		await axios.get(`${URL}/search?q=${saveQueryParam.value}&media_type=image&page=${page.value}`).then(response => {
-			results.value = response.data.collection.items
-			loader.value = false
-		})
-	}
+	const changePage = async () => {
+    loader.value = true
+    try {
+        await axios.get(`${URL}/search?q=${saveQueryParam.value}&media_type=image&page=${page.value}`).then(response => {
+            results.value = response.data.collection.items;
+            loader.value = false;
+        })
+    } catch(error) {
+        console.warn('Error:', error)
+        loader.value = false
+    }
+}
 
 
 	const getResult = async(queryParam) => {
 		saveQueryParam.value = queryParam
 		loader.value = true
-		await axios.get(`${URL}/search?q=${queryParam}&media_type=image`).then(response => {
-			results.value = response.data.collection.items
-			query.value = ''
+		try {
+			await axios.get(`${URL}/search?q=${queryParam}&media_type=image`).then(response => {
+				results.value = response.data.collection.items
+				query.value = ''
+				loader.value = false
+				filteredArray(response.data.collection)
+			})
+		} catch(error) {
+			console.warn('Error getResult:', error)
 			loader.value = false
-			filteredArray(response.data.collection)
-		})
+		}
 	}
 
 	const getIdItem = async(id) => {
 		loader.value = true
-		await axios.get(`${URL}/search?q=${id}`).then(response => {
-			itemID.value = response.data.collection.items
+		try {
+			await axios.get(`${URL}/search?q=${id}`).then(response => {
+				itemID.value = response.data.collection.items
+				loader.value = false
+			})
+		} catch(error) {
+			console.warn('Error, getIdItem:', error)
 			loader.value = false
-		})
+		}
 	}
 
 	const getStartResultsonPage = async() => {
 		if(!results.value.length) {
 			saveQueryParam.value = 'earth'
 			loader.value = true
-			await axios.get(`${URL}/search?q=earth&media_type=image`).then(response => {
-				results.value = response.data.collection.items
-				loader.value = false
-				filteredArray(response.data.collection)
-			})
+			try {
+				await axios.get(`${URL}/search?q=earth&media_type=image`).then(response => {
+					results.value = response.data.collection.items
+					loader.value = false
+					filteredArray(response.data.collection)
+				})
+			} catch(error) {
+				console.warn('Error, getStartResultsonPage:', error)
+			}
 		}
 	}
 
