@@ -1,4 +1,4 @@
-import { ref, computed } from 'vue'
+import { ref } from 'vue'
 import axios from 'axios'
 import { defineStore } from 'pinia'
 
@@ -19,17 +19,16 @@ export const useNasaStore = defineStore('nasaStore', () => {
 	const changePage = async() => {
 		loader.value = true
 		await axios.get(`${URL}/search?q=${saveQueryParam.value}&media_type=image&page=${page.value}`).then(response => {
-			console.log(response.data)
 			results.value = response.data.collection.items
 			loader.value = false
 		})
 	}
 
+
 	const getResult = async(queryParam) => {
 		saveQueryParam.value = queryParam
 		loader.value = true
 		await axios.get(`${URL}/search?q=${queryParam}&media_type=image`).then(response => {
-			console.log(response.data.collection)
 			results.value = response.data.collection.items
 			query.value = ''
 			loader.value = false
@@ -50,7 +49,6 @@ export const useNasaStore = defineStore('nasaStore', () => {
 			saveQueryParam.value = 'earth'
 			loader.value = true
 			await axios.get(`${URL}/search?q=earth&media_type=image`).then(response => {
-				console.log(response.data.collection)
 				results.value = response.data.collection.items
 				loader.value = false
 				filteredArray(response.data.collection)
