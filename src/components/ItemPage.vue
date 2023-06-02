@@ -6,9 +6,9 @@
 				BACK
 			</router-link>
 			<div class="nasa__inner" v-if="isItemExist">
-				<div class="nasa__image">
+				<a class="nasa__image" :href="bigImg" target="_blank">
 					<img :src="nasaStore.itemID[0].links[0].href" :alt="nasaStore.itemID[0].data[0].title">
-				</div>
+				</a>
 				<div class="nasa__box">
 					<h1 class="nasa__box-title">{{ nasaStore.itemID[0].data[0].title }}</h1>
 					<div class="nasa__id">
@@ -32,20 +32,22 @@
 </template>
 
 <script setup>
+	import axios from 'axios'
   import { useNasaStore } from '../stores/nasaStore'
-  import { onMounted, computed } from 'vue'
+  import { onMounted, computed, ref } from 'vue'
   import { useRoute } from 'vue-router'
 
   const nasaStore = useNasaStore()
   const route = useRoute()
 
-  // const item = computed(() => {
-  //   return nasaStore.results.find(result => result.data[0].nasa_id === route.params.id)
-  // })
-	// console.log(item.value)
+	const bigImg = ref('')
 
 	const isItemExist = computed(() => {
 		return nasaStore.itemID && nasaStore.itemID.length
+	})
+
+	const itemID = computed(() => {
+		return nasaStore.itemID
 	})
 
 
@@ -64,6 +66,9 @@
 
 	onMounted(async() => {
 		await nasaStore.getIdItem(route.params.id)
+		await axios.get(itemID.value[0].href).then(response => {
+			bigImg.value = response.data[0]
+		})
 		const header = document.querySelector('#headerImage')
 		header.style = `
 			background: url(${nasaStore.itemID[0].links[0].href}) no-repeat 50%/cover

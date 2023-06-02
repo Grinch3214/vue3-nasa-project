@@ -4,7 +4,7 @@
 	</div>
 	<div ref="resultElem" class="result container" v-else>
 		<div v-for="(item, index) in nasaStore.results" :key="index">
-			<img loading="lazy" :src="item.links[0].href" alt="" width="400" height="400" @click="pushItem(item)">
+			<img  :src="item.links[0].href" alt="" width="400" height="400" @click="pushItem(item)">
 		</div>
 	</div>
 	<div class="pagination" v-if="nasaStore.results.length">
