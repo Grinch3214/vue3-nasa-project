@@ -1,7 +1,7 @@
 <template>
 	<div class="nasa">
 		<div class="container">
-			<router-link class="nasa__back" to="/">
+			<router-link class="nasa__back" to="/" @click="bgRemoveOnClick()">
 				<span></span>
 				BACK
 			</router-link>
@@ -48,6 +48,7 @@
 		return nasaStore.itemID && nasaStore.itemID.length
 	})
 
+
 	const fixDateString = (date) => {
 		let originalDate = date;
 		let dateString = originalDate.substring(0, 10);
@@ -56,8 +57,17 @@
 		return newDateString;
 	}
 
+	const bgRemoveOnClick = () => {
+		const header = document.querySelector('#headerImage')
+		header.style = null
+	}
+
 	onMounted(async() => {
 		await nasaStore.getIdItem(route.params.id)
+		const header = document.querySelector('#headerImage')
+		header.style = `
+			background: url(${nasaStore.itemID[0].links[0].href}) no-repeat 50%/cover
+		`
 	})
 </script>
 

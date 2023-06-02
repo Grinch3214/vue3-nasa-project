@@ -1,5 +1,5 @@
 <template>
-	<header class="search">
+	<header class="search" id="headerImage">
 		<div class="container">
 			<form class="search__form" @submit.prevent="$router.push('/'), nasaStore.getResult(nasaStore.query)">
 				<input class="search__input" type="text" v-model="nasaStore.query" placeholder="Search for ... (e.g. 'Sun')">

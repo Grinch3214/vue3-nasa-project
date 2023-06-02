@@ -15,7 +15,7 @@
 
 <script setup>
 	import { useNasaStore } from '../stores/nasaStore'
-	import { useRouter, useRoute } from 'vue-router'
+	import { useRouter } from 'vue-router'
 	import { onMounted, ref } from 'vue'
 
 	// STORE
@@ -35,19 +35,14 @@
 
 	// router
 	const router = useRouter()
-  const route = useRoute()
 
 	const pushItem = (query) => {
 
 		router.push({
-			// path: `item/${query.data[0].nasa_id}`,
 			name: 'item-page',
 			params: {
 				id: query.data[0].nasa_id
 			},
-			// query: {
-			// 	...route.query
-			// }
 		})
 	}
 
