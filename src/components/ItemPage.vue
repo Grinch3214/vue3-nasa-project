@@ -115,11 +115,24 @@
 		padding: 50px 0 0;
 		display: flex;
 		gap: 40px;
+		@media screen and (max-width: 992px) {
+			display: block;
+			max-width: 768px;
+			margin: 0 auto;
+		}
 	}
 
 	&__image {
+		display: inline-block;
 		height: 500px;
 		flex: 1 1 600px;
+		@media screen and (max-width: 992px) {
+			height: 400px;
+			margin-bottom: 30px;
+		}
+		@media screen and (max-width: 600px) {
+			height: 300px;
+		}
 		img {
 			width: 100%;
 			height: 100%;
