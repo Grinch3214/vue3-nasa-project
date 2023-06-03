@@ -1,29 +1,41 @@
-# nasa-project
+# Nasa API photo search
+a live project with [vueJs](http://vuejs.org)
 
-This template should help get you started developing with Vue 3 in Vite.
+## Demo
+ Go to https://grinch3214.github.io/vue3-nasa-project/
 
-## Recommended IDE Setup
+ ## Preview
 
-[VSCode](https://code.visualstudio.com/) + [Volar](https://marketplace.visualstudio.com/items?itemName=Vue.volar) (and disable Vetur) + [TypeScript Vue Plugin (Volar)](https://marketplace.visualstudio.com/items?itemName=Vue.vscode-typescript-vue-plugin).
+<img src="https://github.com/Grinch3214/vue3-nasa-project/blob/main/demo/Screenshot_1.png" width=500 />
 
-## Customize configuration
+<img src="https://github.com/Grinch3214/vue3-nasa-project/blob/main/demo/Screenshot_2.png" width=500 />
 
-See [Vite Configuration Reference](https://vitejs.dev/config/).
+<img src="https://github.com/Grinch3214/vue3-nasa-project/blob/main/demo/demoGif.gif" />
+---
 
-## Project Setup
+ ## Technologies used
 
-```sh
+- **Vue.js** (Vue 3)
+- **CSS** (scss)
+- **Axios**
+- **Vue-Router**
+- **Vite**
+- **Pinia :pineapple:**
+
+---
+
+
+## Project setup
+```
 npm install
 ```
 
-### Compile and Hot-Reload for Development
-
-```sh
+### Compiles and hot-reloads for development
+```
 npm run dev
 ```
 
-### Compile and Minify for Production
-
-```sh
+### Compiles and minifies for production
+```
 npm run build
 ```
