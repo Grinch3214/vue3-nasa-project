@@ -119,6 +119,7 @@
 			display: block;
 			max-width: 768px;
 			margin: 0 auto;
+			text-align: center;
 		}
 	}
 
@@ -141,7 +142,11 @@
 	}
 
 	&__box {
+		overflow: hidden;
 		flex: 1 1 50%;
+		@media screen and (max-width: 992px) {
+			text-align: justify;
+		}
 	}
 
 	&__box-title {
