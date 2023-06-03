@@ -11,21 +11,72 @@ export const useNasaStore = defineStore('nasaStore', () => {
 	const results = ref([])
 	const query = ref('')
 	const itemID = ref([])
+	const loader = ref(false)
+	const page = ref(1)
+	const totalPages = ref(0)
+	const saveQueryParam = ref('')
+
+	const changePage = async () => {
+    loader.value = true
+    try {
+        await axios.get(`${URL}/search?q=${saveQueryParam.value}&media_type=image&page=${page.value}`).then(response => {
+            results.value = response.data.collection.items;
+            loader.value = false;
+        })
+    } catch(error) {
+        console.warn('Error:', error)
+        loader.value = false
+    }
+}
+
 
 	const getResult = async(queryParam) => {
-		await axios.get(`${URL}/search?q=${queryParam}&media_type=image`).then(response => {
-			console.log(response.data.collection.items)
-			results.value = response.data.collection.items
-			query.value = ''
-		})
+		saveQueryParam.value = queryParam
+		loader.value = true
+		try {
+			await axios.get(`${URL}/search?q=${queryParam}&media_type=image`).then(response => {
+				results.value = response.data.collection.items
+				query.value = ''
+				loader.value = false
+				filteredArray(response.data.collection)
+			})
+		} catch(error) {
+			console.warn('Error getResult:', error)
+			loader.value = false
+		}
 	}
 
 	const getIdItem = async(id) => {
-		console.log(id)
-		await axios.get(`${URL}/search?q=${id}`).then(response => {
-			itemID.value = response.data.collection.items
-			console.log('Store ID', itemID.value)
-		})
+		loader.value = true
+		try {
+			await axios.get(`${URL}/search?q=${id}`).then(response => {
+				itemID.value = response.data.collection.items
+				loader.value = false
+			})
+		} catch(error) {
+			console.warn('Error, getIdItem:', error)
+			loader.value = false
+		}
+	}
+
+	const getStartResultsonPage = async() => {
+		if(!results.value.length) {
+			saveQueryParam.value = 'earth'
+			loader.value = true
+			try {
+				await axios.get(`${URL}/search?q=earth&media_type=image`).then(response => {
+					results.value = response.data.collection.items
+					loader.value = false
+					filteredArray(response.data.collection)
+				})
+			} catch(error) {
+				console.warn('Error, getStartResultsonPage:', error)
+			}
+		}
+	}
+
+	const filteredArray = (arr) => {
+		totalPages.value = Math.ceil(arr.metadata.total_hits / 100)
 	}
 
 	return {
@@ -33,6 +84,12 @@ export const useNasaStore = defineStore('nasaStore', () => {
 		results,
 		query,
 		getIdItem,
-		itemID
+		itemID,
+		getStartResultsonPage,
+		loader,
+		totalPages,
+		page,
+		saveQueryParam,
+		changePage
 	}
 })

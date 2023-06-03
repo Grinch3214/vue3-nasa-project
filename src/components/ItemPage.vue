@@ -1,14 +1,14 @@
 <template>
 	<div class="nasa">
 		<div class="container">
-			<router-link class="nasa__back" to="/">
+			<router-link class="nasa__back" to="/" @click="bgRemoveOnClick()">
 				<span></span>
 				BACK
 			</router-link>
 			<div class="nasa__inner" v-if="isItemExist">
-				<div class="nasa__image">
+				<a class="nasa__image" :href="bigImg" target="_blank">
 					<img :src="nasaStore.itemID[0].links[0].href" :alt="nasaStore.itemID[0].data[0].title">
-				</div>
+				</a>
 				<div class="nasa__box">
 					<h1 class="nasa__box-title">{{ nasaStore.itemID[0].data[0].title }}</h1>
 					<div class="nasa__id">
@@ -32,21 +32,24 @@
 </template>
 
 <script setup>
+	import axios from 'axios'
   import { useNasaStore } from '../stores/nasaStore'
-  import { onMounted, computed } from 'vue'
+  import { onMounted, computed, ref } from 'vue'
   import { useRoute } from 'vue-router'
 
   const nasaStore = useNasaStore()
   const route = useRoute()
 
-  // const item = computed(() => {
-  //   return nasaStore.results.find(result => result.data[0].nasa_id === route.params.id)
-  // })
-	// console.log(item.value)
+	const bigImg = ref('')
 
 	const isItemExist = computed(() => {
 		return nasaStore.itemID && nasaStore.itemID.length
 	})
+
+	const itemID = computed(() => {
+		return nasaStore.itemID
+	})
+
 
 	const fixDateString = (date) => {
 		let originalDate = date;
@@ -56,8 +59,20 @@
 		return newDateString;
 	}
 
+	const bgRemoveOnClick = () => {
+		const header = document.querySelector('#headerImage')
+		header.style = null
+	}
+
 	onMounted(async() => {
 		await nasaStore.getIdItem(route.params.id)
+		await axios.get(itemID.value[0].href).then(response => {
+			bigImg.value = response.data[0]
+		})
+		const header = document.querySelector('#headerImage')
+		header.style = `
+			background: url(${nasaStore.itemID[0].links[0].href}) no-repeat 50%/cover
+		`
 	})
 </script>
 
@@ -100,20 +115,33 @@
 		padding: 50px 0 0;
 		display: flex;
 		gap: 40px;
+		@media screen and (max-width: 992px) {
+			display: block;
+			max-width: 768px;
+			margin: 0 auto;
+		}
 	}
 
 	&__image {
+		display: inline-block;
 		height: 500px;
-		flex: 0 0 600px;
+		flex: 1 1 600px;
+		@media screen and (max-width: 992px) {
+			height: 400px;
+			margin-bottom: 30px;
+		}
+		@media screen and (max-width: 600px) {
+			height: 300px;
+		}
 		img {
 			width: 100%;
 			height: 100%;
-			object-fit: cover;
+			object-fit: contain;
 		}
 	}
 
 	&__box {
-		flex: 1 1 auto;
+		flex: 1 1 50%;
 	}
 
 	&__box-title {
