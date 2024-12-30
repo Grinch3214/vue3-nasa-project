@@ -1,16 +1,20 @@
-<script setup>
-import Loader from './components/Loader.vue'
-import Search from './components/Search.vue'
-import { useNasaStore } from './stores/nasaStore'
-
-const nasaStore = useNasaStore()
-</script>
-
 <template>
-	<Loader v-if="nasaStore.loader" />
-	<Search />
-	<main>
-		<RouterView />
-	</main>
-	
+  <Loader v-if="nasaStore.loader" />
+  <Search />
+  <main>
+    <RouterView />
+  </main>
 </template>
+
+<script setup>
+import { onMounted } from "vue";
+import Loader from "./components/Loader.vue";
+import Search from "./components/Search.vue";
+import { useNasaStore } from "./stores/nasaStore";
+
+const nasaStore = useNasaStore();
+
+onMounted(async () => {
+  await nasaStore.getStartResultsonPage();
+});
+</script>
