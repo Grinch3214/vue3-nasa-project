@@ -30,7 +30,7 @@ export const useNasaStore = defineStore('nasaStore', () => {
 	}
 
 
-	const getResult = async (queryParam) => {
+	async function getResult(queryParam) {
 		saveQueryParam.value = queryParam
 		page.value = 1;
 		loader.value = true
@@ -47,7 +47,7 @@ export const useNasaStore = defineStore('nasaStore', () => {
 		}
 	}
 
-	const getIdItem = async (id) => {
+	async function getIdItem(id) {
 		loader.value = true
 		try {
 			await axios.get(`${URL}/search?q=${id}`).then(response => {
@@ -60,7 +60,7 @@ export const useNasaStore = defineStore('nasaStore', () => {
 		}
 	}
 
-	const getStartResultsonPage = async () => {
+	async function getStartResultsonPage() {
 		if (!results.value.length) {
 			saveQueryParam.value = 'earth'
 			loader.value = true
@@ -76,7 +76,7 @@ export const useNasaStore = defineStore('nasaStore', () => {
 		}
 	}
 
-	const filteredArray = (arr) => {
+	function filteredArray(arr) {
 		totalPages.value = Math.ceil(arr.metadata.total_hits / 100)
 	}
 
