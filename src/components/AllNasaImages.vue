@@ -40,20 +40,20 @@ import { ref } from "vue";
 // STORE
 const nasaStore = useNasaStore();
 
+// router
+const router = useRouter();
+
 // vars
 const resultElem = ref(null);
 
-const scrollToTop = () => {
+function scrollToTop() {
   const element = resultElem.value;
   element.scrollIntoView({
     behavior: "smooth",
     block: "start",
     inline: "nearest",
   });
-};
-
-// router
-const router = useRouter();
+}
 
 const pushItem = (query) => {
   router.push({
