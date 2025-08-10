@@ -55,14 +55,14 @@ function scrollToTop() {
   });
 }
 
-const pushItem = (query) => {
+function pushItem(query) {
   router.push({
     name: "item-page",
     params: {
       id: query.data[0].nasa_id,
     },
   });
-};
+}
 </script>
 
 <style lang="scss" scoped>
