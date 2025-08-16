@@ -87,7 +87,6 @@ function pushItem(query) {
   @media screen and (max-width: 600px) {
     grid-template-columns: repeat(2, 1fr);
   }
-  // padding: 50px 0;
 
   div {
     max-height: 200px;
