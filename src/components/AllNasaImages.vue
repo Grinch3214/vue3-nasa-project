@@ -40,29 +40,29 @@ import { ref } from "vue";
 // STORE
 const nasaStore = useNasaStore();
 
+// router
+const router = useRouter();
+
 // vars
 const resultElem = ref(null);
 
-const scrollToTop = () => {
+function scrollToTop() {
   const element = resultElem.value;
   element.scrollIntoView({
     behavior: "smooth",
     block: "start",
     inline: "nearest",
   });
-};
+}
 
-// router
-const router = useRouter();
-
-const pushItem = (query) => {
+function pushItem(query) {
   router.push({
     name: "item-page",
     params: {
       id: query.data[0].nasa_id,
     },
   });
-};
+}
 </script>
 
 <style lang="scss" scoped>
@@ -87,7 +87,6 @@ const pushItem = (query) => {
   @media screen and (max-width: 600px) {
     grid-template-columns: repeat(2, 1fr);
   }
-  // padding: 50px 0;
 
   div {
     max-height: 200px;
