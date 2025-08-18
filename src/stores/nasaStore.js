@@ -16,7 +16,7 @@ export const useNasaStore = defineStore('nasaStore', () => {
 	const totalPages = ref(0)
 	const saveQueryParam = ref('')
 
-	const changePage = async () => {
+	async function changePage() {
 		loader.value = true
 		try {
 			await axios.get(`${URL}/search?q=${saveQueryParam.value}&media_type=image&page=${page.value}`).then(response => {

@@ -15,6 +15,10 @@ import { useNasaStore } from "./stores/nasaStore";
 const nasaStore = useNasaStore();
 
 onMounted(async () => {
-  await nasaStore.getStartResultsonPage();
+  try {
+    await nasaStore.getStartResultsonPage();
+  } catch (err) {
+    console.log("getStartResultsonPage: ", err);
+  }
 });
 </script>
